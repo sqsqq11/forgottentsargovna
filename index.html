@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>forgottentsargovna</title>
+<style>
+body{margin:0;background:#0b0b0b;color:#eee;font-family:Consolas,monospace;display:flex;justify-content:center;align-items:center;height:100vh}
+#game{width:720px;background:#111;padding:20px;border:2px solid #333}
+button{background:#222;color:#fff;border:1px solid #444;padding:10px;margin:5px;cursor:pointer}
+button:hover{background:#444}
+</style>
+</head>
+<body>
+<div id="game">
+<h2>forgottentsargovna</h2>
+<div id="text"></div>
+<div id="choices"></div>
+</div>
+
+<script>
+const text=document.getElementById("text");
+const choices=document.getElementById("choices");
+
+const scenes={
+start:{text:"Ты очнулся в подвале.\nГолова трещит.\n\n«Ну пиздец», — думаешь ты.",opts:[
+["Осмотреться","look"]
+]},
+look:{text:"Видишь дверь, ящик и лестницу.\nВсё выглядит хуёво.",opts:[
+["Дверь","door"],["Ящик","box"],["Лестница","ladder"]
+]},
+door:{text:"Заперто.\nХуй ты её так откроешь.",opts:[
+["Назад","look"]
+]},
+box:{text:"В ящике лом и ключ.\n«Заебись».",opts:[
+["К двери","win"]
+]},
+ladder:{text:"Лестница ломается.\nТы летишь вниз.\n\nТы труп. Конец.",opts:[
+["Заново","start"]
+]},
+win:{text:"Дверь открыта.\nСвобода.\n\nТы выжил, сука.",opts:[
+["Ещё раз","start"]
+]}
+};
+
+function show(s){
+text.innerText=scenes[s].text;
+choices.innerHTML="";
+scenes[s].opts.forEach(o=>{
+let b=document.createElement("button");
+b.textContent=o[0];
+b.onclick=()=>show(o[1]);
+choices.appendChild(b);
+});
+}
+show("start");
+</script>
+</body>
+</html>
